@@ -25,6 +25,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { messageSchema } from '@/schemas/messageSchema';
 import data from "../../data/data.json"
+import { pickRandomItems } from '@/utils/pickRandomItems';
 
 const specialChar = '||';
 
@@ -41,10 +42,10 @@ const specialChar = '||';
 //   " Stay focused and never give up."
 // ];
 
-export const pickRandomItems = <T extends unknown>(arr: T[], n: number): T[] => {
-  const shuffled = Array.from(arr).sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, n);
-};
+// export const pickRandomItems = <T extends unknown>(arr: T[], n: number): T[] => {
+//   const shuffled = Array.from(arr).sort(() => 0.5 - Math.random());
+//   return shuffled.slice(0, n);
+// };
 
 
 const parseStringMessages = (messageString: string): string[] => {
@@ -71,7 +72,7 @@ export default function SendMessage() {
     isLoading: isSuggestLoading,
     error,
   } = useCompletion({
-    api: '/api/suggest-messages',
+    // api: '/api/suggest-messages',
     initialCompletion: initialMessageString,
   });
   

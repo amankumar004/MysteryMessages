@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { useDebounceValue, useDebounceCallback } from 'usehooks-ts'
+import {useDebounceCallback } from 'usehooks-ts'
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
 import { signUpSchema } from "@/schemas/signUpSchema"
@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button"
 
 
 
-const page = () => {
+const Page = () => {
   const [username, setUsername] = useState('')
   const [usernameMessage, setUsernameMessage] = useState('')
   const [isCheckingUsername, setIsCheckingUsername] = useState(false)
@@ -173,4 +173,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
