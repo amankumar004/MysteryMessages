@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import axios, { AxiosError } from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -24,8 +24,28 @@ import { ApiResponse } from '@/types/ApiResponse';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { messageSchema } from '@/schemas/messageSchema';
+import data from "../../data/data.json"
 
 const specialChar = '||';
+
+// const data = [ 
+//   "Hello, world!",
+//   "How are you today?",
+//   "This is a random message.",
+//   "Have a great day!",
+//   "Keep up the good work.",
+//   "Stay positive and strong.",
+//   "You are doing amazing!",
+//   "Believe in yourself.",
+//   "Success is near.",
+//   " Stay focused and never give up."
+// ];
+
+export const pickRandomItems = <T extends unknown>(arr: T[], n: number): T[] => {
+  const shuffled = Array.from(arr).sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, n);
+};
+
 
 const parseStringMessages = (messageString: string): string[] => {
   return messageString.split(specialChar);
@@ -37,6 +57,13 @@ const initialMessageString =
 export default function SendMessage() {
   const params = useParams<{ username: string }>();
   const username = params.username;
+  const [randomMessages, setRandomMessages] = useState<string[]>([]);
+
+  useEffect(() => {
+    const messages = pickRandomItems(data, 3);
+    setRandomMessages(messages);
+  }, []);
+  console.log(randomMessages);
 
   const {
     complete,
@@ -47,7 +74,7 @@ export default function SendMessage() {
     api: '/api/suggest-messages',
     initialCompletion: initialMessageString,
   });
-
+  
   const form = useForm<z.infer<typeof messageSchema>>({
     resolver: zodResolver(messageSchema),
   });
@@ -57,6 +84,7 @@ export default function SendMessage() {
   const handleMessageClick = (message: string) => {
     form.setValue('content', message);
   };
+
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -88,7 +116,8 @@ export default function SendMessage() {
 
   const fetchSuggestedMessages = async () => {
     try {
-      complete('');
+      const randomMessages = pickRandomItems(data, 3);
+      setRandomMessages(randomMessages);
     } catch (error) {
       console.error('Error fetching messages:', error);
       // Handle error appropriately
@@ -153,7 +182,7 @@ export default function SendMessage() {
             {error ? (
               <p className="text-red-500">{error.message}</p>
             ) : (
-              parseStringMessages(completion).map((message, index) => (
+              randomMessages.map((message, index) => (
                 <Button
                   key={index}
                   variant="outline"

@@ -26,7 +26,7 @@ export default function Home() {
             Dive into the World of Anonymous Feedback
           </h1>
           <p className="mt-3 md:mt-4 text-base md:text-lg">
-            Mystery Messages - Where your identity remains a secret.
+            FeedbackGhost - Where your identity remains a secret.
           </p>
         </section>
 
@@ -60,7 +60,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="text-center p-4 md:p-6 bg-gray-900 text-white">
-        © 2023 Mystery Messages. All rights reserved.
+        © 2023 FeedbackGhost. All rights reserved.
       </footer>
     </>
   );
